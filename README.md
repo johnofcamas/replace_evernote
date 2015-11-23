@@ -39,7 +39,7 @@ Simple project to replace evernote with a 'local' solution
 ## Basic workflow
 
 > 1. Save files in my 'documents' folder in Dropbox (use whatever file structure you'd like)
-> 2. Run the script 'ocr_pdf.sh' "File To OCR" <can be an image or a pdf>
+> 2. Run the script [ocr_pdf.sh](https://github.com/johnofcamas/replace_evernote/blob/master/scripts/ocr_pdf.sh) "File To OCR" <can be an image or a pdf>
 
 ### How to search your files
 
