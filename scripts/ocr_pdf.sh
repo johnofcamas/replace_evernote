@@ -17,16 +17,16 @@ export PATH=$PATH:/usr/local/bin # this will pull in tesseract, imagemagick, etc
 #
 
 #TODO: You need to fix the variable below to point to your Dropbox root folder
-DROPBOX_ROOT_DIR="<replace with your Dropbox dir" # your dropbox root folder
+DROPBOX_ROOT_DIR="<replace with your Dropbox dir>" # your dropbox root folder
 DEST_DIR="${DROPBOX_ROOT_DIR}/Documents/Inbox/Searchable"  # this is where you want the final 'searchable' pdf to go
-LOG_DIR="${DROPBOX_ROOT_DIR}/Documents/Inbox/Log" 
+LOG_DIR="${DROPBOX_ROOT_DIR}/Logs" 
 ARCHIVE_DIR="${DROPBOX_ROOT_DIR}/ConvertedDocs" # where to move the original non-searchable files when complete
-OCR_TMP_DIR="ocr_working_files" # this is a temporary working directory for intermediate files  it will be left around
+OCR_TMP_DIR="ocr_working_files" # this is a temporary working directory for intermediate files  it will be left around unless you fix the TODO's at the bottom
 
-LOG_FILE="ocr.log"
+LOG_FILE="${LOG_DIR}/ocr.log"
 
-#exec 1> $LOG_FILE
-#exec 2>&1
+exec 1> $LOG_FILE
+exec 2>&1
 
 full_filename=`realpath "$1"`
 filename="$(basename "$full_filename")"
@@ -35,6 +35,11 @@ extension="${filename##*.}"
 filename_no_ext="${filename%.*}"
 date_time="`GetFileInfo -m "${full_filename}"`"
 original_file="${filename_no_ext}.original_file.${extension}"
+
+
+##
+#  First, we need to shut down Dropbox because the temp files, etc... get to noise
+osascript -e 'tell application "Dropbox" to quit'
 
 mkdir "${dirname}/${OCR_TMP_DIR}" # Make a temporary working dir to dump all the files to.
 
@@ -86,3 +91,7 @@ mv "${filename_no_ext}".searchable.pdf "${DEST_DIR}/${filename_no_ext}.pdf"
 ## TODO: When you're confident all is working well, swap the commented/uncommented state of the two lines below
 mv "${original_file}" "${ARCHIVE_DIR}"
 #rm "${original_file}"
+
+##
+# Now let's turn Dropbox back on
+open -a "Dropbox"
