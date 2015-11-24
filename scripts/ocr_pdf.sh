@@ -10,7 +10,7 @@ realpath() {
 }
 
 set -xv
-export PATH=$PATH:/usr/local/bin # this will pull in tesseract, imagemagick, etc...
+export PATH=$PATH:/usr/local/bin:/opt/local/bin # this will pull in tesseract, imagemagick, etc...
 
 ##
 # Directory structure:
@@ -86,7 +86,8 @@ tag -a "${tags}" "${filename_no_ext}".searchable.pdf "${filename_no_ext}".txt
 mv "${filename_no_ext}".searchable.pdf "${DEST_DIR}/${filename_no_ext}.pdf"
 
 ## TODO: When you're confident all is working well, uncomment the line below
-#rm -rf "${OCR_TMP_DIR}"
+cd ..
+rm -rf "${OCR_TMP_DIR}"
 
 ## TODO: When you're confident all is working well, swap the commented/uncommented state of the two lines below
 mv "${original_file}" "${ARCHIVE_DIR}"
