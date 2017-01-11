@@ -6,7 +6,7 @@
 
 # realpath gets the 'real' path of the file at $1
 realpath() {
-    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+    [[ $1 = /* ]] && echo "$1" || echo "$PD/${1#./}"
 }
 
 set -xv
